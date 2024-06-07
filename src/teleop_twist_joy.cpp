@@ -28,7 +28,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 #include <memory>
 #include <set>
 #include <string>
-
+#include <iostream>
+#include <array>
 #include <geometry_msgs/msg/twist.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
@@ -40,6 +41,30 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 #define ROS_INFO_NAMED RCUTILS_LOG_INFO_NAMED
 #define ROS_INFO_COND_NAMED RCUTILS_LOG_INFO_EXPRESSION_NAMED
 
+using namespace std;
+
+
+//takes input [-1, 1] for the left and right joystick, output Ux and Theta.dot Z, witch go into a twist file for the motor drivers
+array<float, 2> motionconverter(float gauche, float droite) { 
+    
+    
+    float b = 0.7; //base width(m) (TODO YAML.FILE)
+    float r = 0.1; //radius of the wheel(m) (DTOO YAML.FILE)
+    int gain = 10;//gain de la fonction to ponder speed (TODO YAML.FILE)
+    
+    
+    array<float, 2> X; //vecteur X 
+
+
+
+    X[0] = gain*r/2*(gauche + droite); // matrix solve, [U] = r*[J]*[y] , finds Ux
+    X[1] = gain*r/b*(droite-gauche); // matrix solve, [U] = r*[J]*[y] , finds thetadot Z
+
+
+
+    return X;
+
+}
 namespace teleop_twist_joy
 {
 
@@ -87,7 +112,7 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions& options) : Node("teleo
   pimpl_->enable_turbo_button = this->declare_parameter("enable_turbo_button", -1);
 
   std::map<std::string, int64_t> default_linear_map{
-    {"x", 5L},
+    {"x", 4L}, // speed X button (right 1)
     {"y", -1L},
     {"z", -1L},
   };
@@ -95,7 +120,7 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions& options) : Node("teleo
   this->get_parameters("axis_linear", pimpl_->axis_linear_map);
 
   std::map<std::string, int64_t> default_angular_map{
-    {"yaw", 2L},
+    {"yaw", 3L}, //yaw button (right joystick)
     {"pitch", -1L},
     {"roll", -1L},
   };
@@ -321,21 +346,44 @@ double getVal(const sensor_msgs::msg::Joy::SharedPtr joy_msg, const std::map<std
   return joy_msg->axes[axis_map.at(fieldname)] * scale_map.at(fieldname);
 }
 
+
+
 void TeleopTwistJoy::Impl::sendCmdVelMsg(const sensor_msgs::msg::Joy::SharedPtr joy_msg,
                                          const std::string& which_map)
 {
   // Initializes with zeros by default.
+  
   auto cmd_vel_msg = std::make_unique<geometry_msgs::msg::Twist>();
+  float gauche = joy_msg->axes[1];
+  float droit = joy_msg->axes[4];
+  bool tracks = false;
+  if (joy_msg->buttons[4] == 1) { // boutton 4 (Left 1), if pressed --> control tracks indepedently
+    tracks = true;
+  }
+  if (tracks) {
+    cmd_vel_msg->linear.x = motionconverter(gauche,droit)[0];
+    cmd_vel_msg->linear.y = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "y");
+    cmd_vel_msg->linear.z = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "z");
+    cmd_vel_msg->angular.z = motionconverter(gauche,droit)[1];
+    cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
+    cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
+    cmd_vel_pub->publish(std::move(cmd_vel_msg));
+    sent_disable_msg = false;
+  }
+  else {
+    cmd_vel_msg->linear.x = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "x");
+    cmd_vel_msg->linear.y = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "y");
+    cmd_vel_msg->linear.z = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "z");
+    cmd_vel_msg->angular.z = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "yaw");
+    cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
+    cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
+    cmd_vel_pub->publish(std::move(cmd_vel_msg));
+    sent_disable_msg = false;
+  }
 
-  cmd_vel_msg->linear.x = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "x");
-  cmd_vel_msg->linear.y = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "y");
-  cmd_vel_msg->linear.z = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "z");
-  cmd_vel_msg->angular.z = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "yaw");
-  cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
-  cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
 
-  cmd_vel_pub->publish(std::move(cmd_vel_msg));
-  sent_disable_msg = false;
+
+  
 }
 
 void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr joy_msg)
