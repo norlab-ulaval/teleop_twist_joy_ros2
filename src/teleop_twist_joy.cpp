@@ -48,8 +48,8 @@ using namespace std;
 array<float, 2> motionconverter(float gauche, float droite) { 
     
     
-    float b = 0.7; //base width(m) (TODO YAML.FILE)
-    float r = 0.1; //radius of the wheel(m) (DTOO YAML.FILE)
+    float b = 0.52; //base width(m) (TODO YAML.FILE)
+    float r = 0.125; //radius of the wheel(m) (DTOO YAML.FILE)
     int gain = 10;//gain de la fonction to ponder speed (TODO YAML.FILE)
     
     
