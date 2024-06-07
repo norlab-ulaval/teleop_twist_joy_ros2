@@ -371,23 +371,7 @@ if ( track_control_on == false)
   cmd_vel_msg->angular.z = motionconverter(joy_msg->axes[1], joy_msg->axes[4])[1];
   }
 
-  std::cout << std::endl;
-  std::cout << "Axes: ";
-  for (const auto& axis : joy_msg->axes)
-  {
-      std::cout << axis << " ";
-  }
-  std::cout << std::endl;
-
-  std::cout << "Buttons: ";
-  for (const auto& button : joy_msg->buttons)
-  {
-      std::cout << button << " ";
-  }
-  std::cout << std::endl;
-  std::cout << joy_msg->buttons[enable_button];
-  std::cout << std::endl;
-  std::cout << enable_button;
+  
 
 
   cmd_vel_pub->publish(std::move(cmd_vel_msg));
