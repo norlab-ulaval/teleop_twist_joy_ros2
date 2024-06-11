@@ -1,0 +1,32 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/stagiaire/ros2_ws/install/tutorial_interfaces/include/**",
+        "/home/stagiaire/ros2_ws/install/teleop_twist_joy/include/**",
+        "/home/stagiaire/ros2_ws/install/more_interfaces/include/**",
+        "/home/stagiaire/ros2_ws/install/examples_rclcpp_cbg_executor/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/stagiaire/ros2_ws/src/cpp_pubsub/include/**",
+        "/home/stagiaire/ros2_ws/src/examples/rclcpp/composition/minimal_composition/include/**",
+        "/home/stagiaire/ros2_ws/src/examples/rclcpp/executors/cbg_executor/include/**",
+        "/home/stagiaire/ros2_ws/src/examples/rclcpp/wait_set/include/**",
+        "/home/stagiaire/ros2_ws/src/more_interfaces/include/**",
+        "/home/stagiaire/ros2_ws/src/my_package/include/**",
+        "/home/stagiaire/ros2_ws/src/teleop_twist_joy_ros2/include/**",
+        "/home/stagiaire/ros2_ws/src/tutorial_interfaces/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

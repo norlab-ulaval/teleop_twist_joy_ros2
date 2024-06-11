@@ -49,8 +49,8 @@ array<float, 2> motionconverter(float gauche, float droite) {
     
     
     float b = 0.52; //base width(m) (TODO YAML.FILE)
-    float r = 0.125; //radius of the wheel(m) (DTOO YAML.FILE)
-    int gain = 10;//gain de la fonction to ponder speed (TODO YAML.FILE)
+    float r = 0.125; //radius of the wheel(m) (TODO YAML.FILE)
+    int gain = 100;//gain de la fonction to ponder speed (TODO YAML.FILE)
     
     
     array<float, 2> X; //vecteur X 
@@ -354,33 +354,34 @@ void TeleopTwistJoy::Impl::sendCmdVelMsg(const sensor_msgs::msg::Joy::SharedPtr 
   // Initializes with zeros by default.
   
   auto cmd_vel_msg = std::make_unique<geometry_msgs::msg::Twist>();
-  float gauche = joy_msg->axes[1];
-  float droit = joy_msg->axes[4];
-  bool tracks = false;
-  if (joy_msg->buttons[4] == 1) { // boutton 4 (Left 1), if pressed --> control tracks indepedently
-    tracks = true;
-  }
-  if (tracks) {
-    cmd_vel_msg->linear.x = motionconverter(gauche,droit)[0];
-    cmd_vel_msg->linear.y = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "y");
-    cmd_vel_msg->linear.z = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "z");
-    cmd_vel_msg->angular.z = motionconverter(gauche,droit)[1];
-    cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
-    cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
-    cmd_vel_pub->publish(std::move(cmd_vel_msg));
-    sent_disable_msg = false;
-  }
-  else {
-    cmd_vel_msg->linear.x = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "x");
-    cmd_vel_msg->linear.y = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "y");
-    cmd_vel_msg->linear.z = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "z");
-    cmd_vel_msg->angular.z = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "yaw");
-    cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
-    cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
-    cmd_vel_pub->publish(std::move(cmd_vel_msg));
-    sent_disable_msg = false;
+if ( track_control_on == false)
+{
+  cmd_vel_msg->linear.x = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "x");
+  cmd_vel_msg->linear.y = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "y");
+  cmd_vel_msg->linear.z = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "z");
+  cmd_vel_msg->angular.z = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "yaw");
+  cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
+  cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
+}
+  else if (track_control_on == true){
+  
+  float Xval = motionconverter(joy_msg->axes[1], joy_msg->axes[4])[0];
+  float Zrot = motionconverter(joy_msg->axes[1], joy_msg->axes[4])[1];
+
+  if ((Xval < 0.2 && Xval > -0.2)&& (Zrot < 0.2 && Zrot > -0.2))//if BOTH joy sticks are near default(0), send no message
+  
+  {
+    cmd_vel_msg->linear.x = 0;
+    cmd_vel_msg->angular.z = 0;
   }
 
+
+  else{
+  cmd_vel_msg->linear.x =  Xval;
+  cmd_vel_msg->angular.z = Zrot;
+  }
+
+  }
 
 
   
