@@ -384,9 +384,18 @@ else if (track_control_on == true && (scale_linear_map[which_map].find("x") != s
   float vel_x = motionconverter(joy_msg->axes[1] , joy_msg->axes[4])[0];
   float angular_vel_z = motionconverter(joy_msg->axes[1] , joy_msg->axes[4])[1];
 
-  cmd_vel_msg->linear.x = vel_x * scale_linear_map[which_map].at("x")*1/wheel_radius;
-  cmd_vel_msg->angular.z = angular_vel_z *scale_angular_map[which_map].at("yaw") *(base_width/(2*wheel_radius)); 
+  
+  if ((vel_x < 0.2 && vel_x > -0.2)&& (angular_vel_z < 0.2 && angular_vel_z > -0.2))//if BOTH joy sticks are near default(0), send no message
+  {
+    cmd_vel_msg->linear.x = 0;
+    cmd_vel_msg->angular.z = 0;
   }
+  else
+  {
+    cmd_vel_msg->linear.x = vel_x * scale_linear_map[which_map].at("x")*1/wheel_radius;
+    cmd_vel_msg->angular.z = angular_vel_z *scale_angular_map[which_map].at("yaw") *(base_width/(2*wheel_radius)); 
+  }
+}
 
 
   cmd_vel_pub->publish(std::move(cmd_vel_msg));
