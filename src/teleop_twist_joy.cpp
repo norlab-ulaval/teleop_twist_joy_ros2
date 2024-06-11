@@ -48,26 +48,8 @@ using namespace std;
 
 
 //takes input [0, 1] for the left and right joystick, output Ux and Theta.dot Z, witch go into a twist file for the motor drivers
-array<float, 2> motionconverter(float gauche, float droite) { 
     
-    
-    float b = 0.7; //base width(m) (TODO YAML.FILE)
-    float r = 0.1; //radius of the wheel(m) (TODO YAML.FILE)
-    int gain = 10;//gain de la fonction to ponder speed (TODO YAML.FILE)
-    
-    
-    array<float, 2> X; //vecteur X 
-
-
-
-    X[0] = gain*r/2*(gauche + droite); // calcul matriciel, [U] = r*[J]*[y] , donne Ux
-    X[1] = gain*r/b*(droite-gauche); // calcul matriciel, [U] = r*[J]*[y] , donne thetadot Z
-
-
-
-    return X;
-
-}
+  
 
 namespace teleop_twist_joy
 {
@@ -86,6 +68,8 @@ struct TeleopTwistJoy::Impl
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub;
  
   bool track_control_on = false;
+  float wheel_radius;
+  float base_width;
   bool require_enable_button;
   int64_t enable_button;
   int64_t enable_turbo_button;
@@ -96,6 +80,7 @@ struct TeleopTwistJoy::Impl
 
   std::map<std::string, int64_t> axis_angular_map;
   std::map<std::string, std::map<std::string, double>> scale_angular_map;
+  array<float, 2> motionconverter(float gauche, float droit);
 
   bool sent_disable_msg;
 };
@@ -116,6 +101,12 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions& options) : Node("teleo
   pimpl_->enable_button = this->declare_parameter("enable_button", 5);
 
   pimpl_->enable_turbo_button = this->declare_parameter("enable_turbo_button", -1);
+
+  this->declare_parameter<float>("wheel_radius", 4.5);
+  this->get_parameter("wheel_radius", pimpl_->wheel_radius);
+
+  this->declare_parameter<float>("base_width", 4.5);
+  this->get_parameter("base_width", pimpl_->base_width);
 
   std::map<std::string, int64_t> default_linear_map{
     {"x", 4L},
@@ -333,6 +324,26 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions& options) : Node("teleo
   callback_handle = this->add_on_set_parameters_callback(param_callback);
 }
 
+
+//init the motionconverter func that whe are using later in the class
+array<float, 2> TeleopTwistJoy::Impl::motionconverter(float gauche, float droit){
+    
+    float b = base_width; //base width(m) (TODO YAML.FILE)
+    float r = wheel_radius; //radius of the wheel(m) (TODO YAML.FILE)
+    
+    array<float, 2> X; //vecteur X 
+
+
+
+    X[0] = r/2*(gauche + droit); // calcul matriciel, [U] = r*[J]*[y] , donne Ux
+    X[1] = r/b*(droit-gauche); // calcul matriciel, [U] = r*[J]*[y] , donne thetadot Z
+
+
+    return X;
+}
+
+
+
 TeleopTwistJoy::~TeleopTwistJoy()
 {
   delete pimpl_;
@@ -348,6 +359,7 @@ double getVal(const sensor_msgs::msg::Joy::SharedPtr joy_msg, const std::map<std
   {
     return 0.0;
   }
+
 
   return joy_msg->axes[axis_map.at(fieldname)] * scale_map.at(fieldname);
 }
@@ -366,12 +378,15 @@ if ( track_control_on == false)
   cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
   cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
 }
-  else if (track_control_on == true){ 
-  cmd_vel_msg->linear.x = motionconverter(joy_msg->axes[1], joy_msg->axes[4])[0]; 
-  cmd_vel_msg->angular.z = motionconverter(joy_msg->axes[1], joy_msg->axes[4])[1];
-  }
 
-  
+else if (track_control_on == true && (scale_linear_map[which_map].find("x") != scale_linear_map[which_map].end() && scale_angular_map[which_map].find("yaw") != scale_angular_map[which_map].end()))
+{ 
+  float vel_x = motionconverter(joy_msg->axes[1] , joy_msg->axes[4])[0];
+  float angular_vel_z = motionconverter(joy_msg->axes[1] , joy_msg->axes[4])[1];
+
+  cmd_vel_msg->linear.x = vel_x * scale_linear_map[which_map].at("x")*1/wheel_radius;
+  cmd_vel_msg->angular.z = angular_vel_z *scale_angular_map[which_map].at("yaw") *(base_width/(2*wheel_radius)); 
+  }
 
 
   cmd_vel_pub->publish(std::move(cmd_vel_msg));
@@ -391,15 +406,14 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
     if (joy_msg->buttons[enable_track_control_button])
     {
 
-      sendCmdVelMsg(joy_msg, "track_control_turbo");
       track_control_on = true;
 
     }
 
     else {
       track_control_on =false;
-      sendCmdVelMsg(joy_msg, "turbo");
     }
+      sendCmdVelMsg(joy_msg, "turbo");
   }
 
 
@@ -412,15 +426,14 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
     if (joy_msg->buttons[enable_track_control_button])
     {
 
-      sendCmdVelMsg(joy_msg, "track_control_normal");
       track_control_on = true;
 
     }
 
     else {
       track_control_on =false;
-      sendCmdVelMsg(joy_msg, "normal");
     }
+      sendCmdVelMsg(joy_msg, "normal");
   }
 
   
