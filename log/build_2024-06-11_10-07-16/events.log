@@ -1,0 +1,191 @@
+[0.000000] (-) TimerEvent: {}
+[0.000186] (teleop_twist_joy) JobQueued: {'identifier': 'teleop_twist_joy', 'dependencies': OrderedDict()}
+[0.000254] (teleop_twist_joy) JobStarted: {'identifier': 'teleop_twist_joy'}
+[0.015511] (teleop_twist_joy) JobProgress: {'identifier': 'teleop_twist_joy', 'progress': 'cmake'}
+[0.016994] (teleop_twist_joy) JobProgress: {'identifier': 'teleop_twist_joy', 'progress': 'build'}
+[0.018752] (teleop_twist_joy) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy', '--', '-j8', '-l8'], 'cwd': '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'dom'), ('XDG_SESSION_TYPE', 'wayland'), ('GIT_ASKPASS', '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/home/dom/ros2_ws/install/teleop_twist_joy/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/dom'), ('CHROME_DESKTOP', 'code-url-handler.desktop'), ('OLDPWD', '/home/dom/ros2_ws/src'), ('TERM_PROGRAM_VERSION', '1.90.0'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('VSCODE_GIT_ASKPASS_MAIN', '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/usr/share/code/code'), ('MANAGERPID', '1429'), ('SYSTEMD_EXEC_PID', '1601'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '5010'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/dom/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'dom'), ('JOURNAL_STREAM', '8:30169'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'dom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/dom-Aspire-E5-576G:@/tmp/.ICE-unix/1562,unix/dom-Aspire-E5-576G:/tmp/.ICE-unix/1562'), ('INVOCATION_ID', '7c0c02edbe5d4fca9170e0bce42e5506'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'Unity'), ('PYTHONSTARTUP', '/home/dom/.vscode/extensions/ms-python.python-2024.8.0/python_files/pythonrc.py'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.OB4ZO2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-cb40a57cad.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '95'), ('AMENT_PREFIX_PATH', '/home/dom/ros2_ws/install/teleop_twist_joy:/opt/ros/humble'), ('ORIGINAL_XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:c9d7dfac-02f5-4488-9fd8-07ad8c34431f'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/dom/ros2_ws/install/teleop_twist_joy:/opt/ros/humble')]), 'shell': False}
+[0.098874] (-) TimerEvent: {}
+[0.147374] (teleop_twist_joy) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/teleop_twist_joy.dir/src/teleop_twist_joy.cpp.o\x1b[0m\n'}
+[0.199000] (-) TimerEvent: {}
+[0.299276] (-) TimerEvent: {}
+[0.399594] (-) TimerEvent: {}
+[0.500009] (-) TimerEvent: {}
+[0.600867] (-) TimerEvent: {}
+[0.701498] (-) TimerEvent: {}
+[0.802314] (-) TimerEvent: {}
+[0.902696] (-) TimerEvent: {}
+[1.003053] (-) TimerEvent: {}
+[1.103425] (-) TimerEvent: {}
+[1.203804] (-) TimerEvent: {}
+[1.304171] (-) TimerEvent: {}
+[1.404588] (-) TimerEvent: {}
+[1.504951] (-) TimerEvent: {}
+[1.605281] (-) TimerEvent: {}
+[1.705638] (-) TimerEvent: {}
+[1.805957] (-) TimerEvent: {}
+[1.906292] (-) TimerEvent: {}
+[2.006739] (-) TimerEvent: {}
+[2.107422] (-) TimerEvent: {}
+[2.208363] (-) TimerEvent: {}
+[2.308899] (-) TimerEvent: {}
+[2.409210] (-) TimerEvent: {}
+[2.509533] (-) TimerEvent: {}
+[2.609831] (-) TimerEvent: {}
+[2.710119] (-) TimerEvent: {}
+[2.810445] (-) TimerEvent: {}
+[2.910852] (-) TimerEvent: {}
+[3.011198] (-) TimerEvent: {}
+[3.111552] (-) TimerEvent: {}
+[3.211898] (-) TimerEvent: {}
+[3.312256] (-) TimerEvent: {}
+[3.412597] (-) TimerEvent: {}
+[3.512963] (-) TimerEvent: {}
+[3.613287] (-) TimerEvent: {}
+[3.713820] (-) TimerEvent: {}
+[3.814496] (-) TimerEvent: {}
+[3.915192] (-) TimerEvent: {}
+[4.015775] (-) TimerEvent: {}
+[4.116336] (-) TimerEvent: {}
+[4.216826] (-) TimerEvent: {}
+[4.317391] (-) TimerEvent: {}
+[4.417732] (-) TimerEvent: {}
+[4.518082] (-) TimerEvent: {}
+[4.618409] (-) TimerEvent: {}
+[4.718744] (-) TimerEvent: {}
+[4.819090] (-) TimerEvent: {}
+[4.919472] (-) TimerEvent: {}
+[5.019809] (-) TimerEvent: {}
+[5.120170] (-) TimerEvent: {}
+[5.220497] (-) TimerEvent: {}
+[5.320840] (-) TimerEvent: {}
+[5.421196] (-) TimerEvent: {}
+[5.521542] (-) TimerEvent: {}
+[5.621959] (-) TimerEvent: {}
+[5.722279] (-) TimerEvent: {}
+[5.822675] (-) TimerEvent: {}
+[5.923059] (-) TimerEvent: {}
+[6.023448] (-) TimerEvent: {}
+[6.123834] (-) TimerEvent: {}
+[6.224198] (-) TimerEvent: {}
+[6.324516] (-) TimerEvent: {}
+[6.424799] (-) TimerEvent: {}
+[6.525132] (-) TimerEvent: {}
+[6.625460] (-) TimerEvent: {}
+[6.725771] (-) TimerEvent: {}
+[6.826081] (-) TimerEvent: {}
+[6.926413] (-) TimerEvent: {}
+[7.026757] (-) TimerEvent: {}
+[7.127067] (-) TimerEvent: {}
+[7.227402] (-) TimerEvent: {}
+[7.327726] (-) TimerEvent: {}
+[7.428077] (-) TimerEvent: {}
+[7.528459] (-) TimerEvent: {}
+[7.628778] (-) TimerEvent: {}
+[7.729142] (-) TimerEvent: {}
+[7.829545] (-) TimerEvent: {}
+[7.929872] (-) TimerEvent: {}
+[8.030213] (-) TimerEvent: {}
+[8.130513] (-) TimerEvent: {}
+[8.230813] (-) TimerEvent: {}
+[8.331111] (-) TimerEvent: {}
+[8.431428] (-) TimerEvent: {}
+[8.531719] (-) TimerEvent: {}
+[8.632158] (-) TimerEvent: {}
+[8.732508] (-) TimerEvent: {}
+[8.832799] (-) TimerEvent: {}
+[8.933075] (-) TimerEvent: {}
+[9.033369] (-) TimerEvent: {}
+[9.133641] (-) TimerEvent: {}
+[9.234034] (-) TimerEvent: {}
+[9.334384] (-) TimerEvent: {}
+[9.434703] (-) TimerEvent: {}
+[9.535007] (-) TimerEvent: {}
+[9.635304] (-) TimerEvent: {}
+[9.735624] (-) TimerEvent: {}
+[9.835884] (-) TimerEvent: {}
+[9.936176] (-) TimerEvent: {}
+[10.036503] (-) TimerEvent: {}
+[10.136782] (-) TimerEvent: {}
+[10.237093] (-) TimerEvent: {}
+[10.337351] (-) TimerEvent: {}
+[10.437704] (-) TimerEvent: {}
+[10.538026] (-) TimerEvent: {}
+[10.638384] (-) TimerEvent: {}
+[10.738689] (-) TimerEvent: {}
+[10.839009] (-) TimerEvent: {}
+[10.939327] (-) TimerEvent: {}
+[11.039649] (-) TimerEvent: {}
+[11.139961] (-) TimerEvent: {}
+[11.240280] (-) TimerEvent: {}
+[11.340595] (-) TimerEvent: {}
+[11.441069] (-) TimerEvent: {}
+[11.541380] (-) TimerEvent: {}
+[11.641718] (-) TimerEvent: {}
+[11.742060] (-) TimerEvent: {}
+[11.842414] (-) TimerEvent: {}
+[11.942794] (-) TimerEvent: {}
+[12.043235] (-) TimerEvent: {}
+[12.143595] (-) TimerEvent: {}
+[12.243965] (-) TimerEvent: {}
+[12.307080] (teleop_twist_joy) StdoutLine: {'line': b'[ 50%] \x1b[32m\x1b[1mLinking CXX shared library libteleop_twist_joy.so\x1b[0m\n'}
+[12.344097] (-) TimerEvent: {}
+[12.444480] (-) TimerEvent: {}
+[12.544997] (-) TimerEvent: {}
+[12.645652] (-) TimerEvent: {}
+[12.746247] (-) TimerEvent: {}
+[12.846676] (-) TimerEvent: {}
+[12.947097] (-) TimerEvent: {}
+[13.047459] (-) TimerEvent: {}
+[13.134575] (teleop_twist_joy) StdoutLine: {'line': b'[ 50%] Built target teleop_twist_joy\n'}
+[13.147617] (-) TimerEvent: {}
+[13.168298] (teleop_twist_joy) StdoutLine: {'line': b'[ 75%] \x1b[32m\x1b[1mLinking CXX executable teleop_node\x1b[0m\n'}
+[13.247823] (-) TimerEvent: {}
+[13.348319] (-) TimerEvent: {}
+[13.449009] (-) TimerEvent: {}
+[13.550166] (-) TimerEvent: {}
+[13.649139] (teleop_twist_joy) StdoutLine: {'line': b'[100%] Built target teleop_twist_joy_node\n'}
+[13.650253] (-) TimerEvent: {}
+[13.673780] (teleop_twist_joy) CommandEnded: {'returncode': 0}
+[13.744260] (teleop_twist_joy) JobProgress: {'identifier': 'teleop_twist_joy', 'progress': 'install'}
+[13.754947] (-) TimerEvent: {}
+[13.765404] (teleop_twist_joy) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy'], 'cwd': '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'dom'), ('XDG_SESSION_TYPE', 'wayland'), ('GIT_ASKPASS', '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/home/dom/ros2_ws/install/teleop_twist_joy/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/dom'), ('CHROME_DESKTOP', 'code-url-handler.desktop'), ('OLDPWD', '/home/dom/ros2_ws/src'), ('TERM_PROGRAM_VERSION', '1.90.0'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('VSCODE_GIT_ASKPASS_MAIN', '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/usr/share/code/code'), ('MANAGERPID', '1429'), ('SYSTEMD_EXEC_PID', '1601'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '5010'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/dom/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'dom'), ('JOURNAL_STREAM', '8:30169'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'dom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/dom-Aspire-E5-576G:@/tmp/.ICE-unix/1562,unix/dom-Aspire-E5-576G:/tmp/.ICE-unix/1562'), ('INVOCATION_ID', '7c0c02edbe5d4fca9170e0bce42e5506'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'Unity'), ('PYTHONSTARTUP', '/home/dom/.vscode/extensions/ms-python.python-2024.8.0/python_files/pythonrc.py'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.OB4ZO2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-cb40a57cad.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '95'), ('AMENT_PREFIX_PATH', '/home/dom/ros2_ws/install/teleop_twist_joy:/opt/ros/humble'), ('ORIGINAL_XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:c9d7dfac-02f5-4488-9fd8-07ad8c34431f'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/dom/ros2_ws/install/teleop_twist_joy:/opt/ros/humble')]), 'shell': False}
+[13.789275] (teleop_twist_joy) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[13.792674] (teleop_twist_joy) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[13.793278] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/lib/teleop_twist_joy/teleop_node\n'}
+[13.793707] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/include/teleop_twist_joy/teleop_twist_joy/teleop_twist_joy.hpp\n'}
+[13.793983] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/include/teleop_twist_joy/teleop_twist_joy/teleop_twist_joy_export.h\n'}
+[13.798668] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/launch/teleop-launch.py\n'}
+[13.799008] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/atk3.config.yaml\n'}
+[13.799244] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/ps3-holonomic.config.yaml\n'}
+[13.799488] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/ps3.config.yaml\n'}
+[13.799721] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/xbox.config.yaml\n'}
+[13.799931] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/xd3.config.yaml\n'}
+[13.800172] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/library_path.sh\n'}
+[13.800383] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/library_path.dsv\n'}
+[13.800624] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/ament_index/resource_index/package_run_dependencies/teleop_twist_joy\n'}
+[13.800833] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/ament_index/resource_index/parent_prefix_path/teleop_twist_joy\n'}
+[13.801238] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/ament_prefix_path.sh\n'}
+[13.801591] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/ament_prefix_path.dsv\n'}
+[13.801839] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/path.sh\n'}
+[13.802593] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/path.dsv\n'}
+[13.803160] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/local_setup.bash\n'}
+[13.803581] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/local_setup.sh\n'}
+[13.804086] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/local_setup.zsh\n'}
+[13.804493] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/local_setup.dsv\n'}
+[13.804852] (teleop_twist_joy) StdoutLine: {'line': b'-- Symlinking: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/package.dsv\n'}
+[13.830952] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/ament_index/resource_index/packages/teleop_twist_joy\n'}
+[13.831380] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/ament_index/resource_index/rclcpp_components/teleop_twist_joy\n'}
+[13.831674] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[13.831939] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[13.832275] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[13.832584] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/teleop_twist_joyConfig.cmake\n'}
+[13.832844] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/teleop_twist_joyConfig-version.cmake\n'}
+[13.833271] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/package.xml\n'}
+[13.833695] (teleop_twist_joy) StdoutLine: {'line': b'-- Installing: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/lib/libteleop_twist_joy.so\n'}
+[13.850364] (teleop_twist_joy) StdoutLine: {'line': b'-- Set runtime path of "/home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/lib/libteleop_twist_joy.so" to ""\n'}
+[13.850797] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/export_teleop_twist_joyExport.cmake\n'}
+[13.851008] (teleop_twist_joy) StdoutLine: {'line': b'-- Up-to-date: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/export_teleop_twist_joyExport-noconfig.cmake\n'}
+[13.855430] (teleop_twist_joy) CommandEnded: {'returncode': 0}
+[13.858334] (-) TimerEvent: {}
+[13.940782] (teleop_twist_joy) JobEnded: {'identifier': 'teleop_twist_joy', 'rc': 0}
+[13.941720] (-) EventReactorShutdown: {}

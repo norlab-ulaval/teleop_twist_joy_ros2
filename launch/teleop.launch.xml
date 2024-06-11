@@ -1,0 +1,10 @@
+<launch>
+    <node pkg="joy" exec="joy_node" name="joy_node" output="screen">
+        <param name="device_name" value="Logitech Gamepad F710"/>
+    </node>
+    <node pkg="teleop_twist_joy" exec="teleop_node" name="teleop_twist_joy_node">
+	    <remap from="cmd_vel" to="/joy_vel" />
+	    <param from="$(find-pkg-share teleop_twist_joy)/config/teleop_simple.yaml"/>
+    </node>
+
+</launch>

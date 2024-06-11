@@ -1,0 +1,78 @@
+[0.017s] Invoking command in '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/dom/ros2_ws/src/teleop_twist_joy_ros2 -DCMAKE_INSTALL_PREFIX=/home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy
+[0.044s] -- Found ament_cmake: 1.3.9 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.318s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.330s] -- Found geometry_msgs: 4.2.3 (/opt/ros/humble/share/geometry_msgs/cmake)
+[0.372s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.375s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.384s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.396s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.416s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.622s] -- Found rclcpp: 16.0.9 (/opt/ros/humble/share/rclcpp/cmake)
+[0.747s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.748s] -- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.889s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.056s] -- Found rclcpp_components: 16.0.9 (/opt/ros/humble/share/rclcpp_components/cmake)
+[1.125s] -- Found sensor_msgs: 4.2.3 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.234s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.329s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[1.360s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.361s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+[1.361s] -- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+[1.412s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.412s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy>;$<BUILD_INTERFACE:/home/dom/ros2_ws/src/teleop_twist_joy_ros2/include>
+[1.412s] -- Configured cppcheck exclude dirs and/or files: 
+[1.417s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.425s] -- Added test 'lint_cmake' to check CMake code style
+[1.430s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.436s] -- Added test 'xmllint' to check XML markup files
+[1.439s] -- Configuring done
+[1.457s] -- Generating done
+[1.459s] -- Build files have been written to: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy
+[1.472s] Invoked command in '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/dom/ros2_ws/src/teleop_twist_joy_ros2 -DCMAKE_INSTALL_PREFIX=/home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy
+[1.474s] Invoking command in '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy -- -j8 -l8
+[1.527s] [35m[1mConsolidate compiler generated dependencies of target teleop_twist_joy[0m
+[1.553s] [ 25%] [32mBuilding CXX object CMakeFiles/teleop_twist_joy.dir/src/teleop_twist_joy.cpp.o[0m
+[13.559s] [ 50%] [32m[1mLinking CXX shared library libteleop_twist_joy.so[0m
+[14.369s] [ 50%] Built target teleop_twist_joy
+[14.384s] [35m[1mConsolidate compiler generated dependencies of target teleop_twist_joy_node[0m
+[14.409s] [ 75%] [32m[1mLinking CXX executable teleop_node[0m
+[14.835s] [100%] Built target teleop_twist_joy_node
+[14.857s] Invoked command in '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy -- -j8 -l8
+[14.928s] Invoking command in '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy
+[14.943s] -- Install configuration: ""
+[14.944s] -- Execute custom install script
+[14.945s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/lib/teleop_twist_joy/teleop_node
+[14.946s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/include/teleop_twist_joy/teleop_twist_joy/teleop_twist_joy.hpp
+[14.946s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/include/teleop_twist_joy/teleop_twist_joy/teleop_twist_joy_export.h
+[14.947s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/launch/teleop-launch.py
+[14.947s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/atk3.config.yaml
+[14.947s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/ps3-holonomic.config.yaml
+[14.948s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/ps3.config.yaml
+[14.948s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/xbox.config.yaml
+[14.948s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/config/xd3.config.yaml
+[14.949s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/library_path.sh
+[14.949s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/library_path.dsv
+[14.950s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/ament_index/resource_index/package_run_dependencies/teleop_twist_joy
+[14.950s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/ament_index/resource_index/parent_prefix_path/teleop_twist_joy
+[14.951s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/ament_prefix_path.sh
+[14.952s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/ament_prefix_path.dsv
+[14.952s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/path.sh
+[14.952s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/environment/path.dsv
+[14.953s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/local_setup.bash
+[14.953s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/local_setup.sh
+[14.953s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/local_setup.zsh
+[14.953s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/local_setup.dsv
+[14.954s] -- Symlinking: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/package.dsv
+[14.969s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/ament_index/resource_index/packages/teleop_twist_joy
+[14.969s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/ament_index/resource_index/rclcpp_components/teleop_twist_joy
+[14.969s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/ament_cmake_export_include_directories-extras.cmake
+[14.969s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/ament_cmake_export_libraries-extras.cmake
+[14.970s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/ament_cmake_export_targets-extras.cmake
+[14.970s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/teleop_twist_joyConfig.cmake
+[14.970s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/teleop_twist_joyConfig-version.cmake
+[14.971s] -- Up-to-date symlink: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/package.xml
+[14.971s] -- Installing: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/lib/libteleop_twist_joy.so
+[14.989s] -- Set runtime path of "/home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/lib/libteleop_twist_joy.so" to ""
+[14.989s] -- Up-to-date: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/export_teleop_twist_joyExport.cmake
+[14.989s] -- Up-to-date: /home/dom/ros2_ws/src/teleop_twist_joy_ros2/install/teleop_twist_joy/share/teleop_twist_joy/cmake/export_teleop_twist_joyExport-noconfig.cmake
+[14.996s] Invoked command in '/home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/dom/ros2_ws/src/teleop_twist_joy_ros2/build/teleop_twist_joy

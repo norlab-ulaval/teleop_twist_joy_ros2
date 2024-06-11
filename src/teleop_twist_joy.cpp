@@ -408,15 +408,13 @@ else if (track_on == -1 && (scale_linear_map[which_map].find("x") != scale_linea
   {
     cmd_vel_msg->linear.x = 0;
     cmd_vel_msg->angular.z = 0;
-    cout << "BLOCK";
-    cout << endl;
+    
   }
   else
   {
     cmd_vel_msg->linear.x = vel_x * scale_linear_map[which_map].at("x")*1/wheel_radius;
     cmd_vel_msg->angular.z = angular_vel_z *scale_angular_map[which_map].at("yaw") *(base_width/(2*wheel_radius)); 
-    cout << "OK";
-    cout << endl;
+    
   }
 }
 
