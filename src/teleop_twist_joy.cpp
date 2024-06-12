@@ -433,17 +433,9 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
       static_cast<int>(joy_msg->buttons.size()) > enable_turbo_button &&
       joy_msg->buttons[enable_turbo_button])
   {
-    if (joy_msg->buttons[enable_track_control_button])
-    {
 
-      track_control_on = true;
-
-    }
-
-    else {
-      track_control_on =false;
-    }
       sendCmdVelMsg(joy_msg, "turbo");
+
   }
 
 
