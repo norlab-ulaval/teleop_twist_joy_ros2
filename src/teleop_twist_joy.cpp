@@ -345,8 +345,8 @@ array<float, 2> TeleopTwistJoy::Impl::motionconverter(float gauche, float droit)
 
 
 
-    X[0] = r/2*(gauche + droit); // calcul matriciel, [U] = r*[J]*[y] , donne Ux
-    X[1] = r/b*(droit-gauche); // calcul matriciel, [U] = r*[J]*[y] , donne thetadot Z
+    X[0] = (gauche + droit); // calcul matriciel, [U] = r*[J]*[y] , donne Ux
+    X[1] = 1/b*(droit-gauche); // calcul matriciel, [U] = r*[J]*[y] , donne thetadot Z
 
 
     return X;
@@ -391,10 +391,10 @@ if ( track_on == 1)
 
 else if (track_on == -1 && (scale_linear_map[which_map].find("x") != scale_linear_map[which_map].end() && scale_angular_map[which_map].find("yaw") != scale_angular_map[which_map].end()))
 { 
-  float vel_x = motionconverter(joy_msg->axes[1] , joy_msg->axes[4])[0];
-  float angular_vel_z = motionconverter(joy_msg->axes[1] , joy_msg->axes[4])[1];
-  float left_stick_value = joy_msg->axes[1];
-  float right_stick_value = joy_msg->axes[4];
+  float left_stick_value = joy_msg->axes[1] * scale_linear_map[which_map].at("x")/2;
+  float right_stick_value = joy_msg->axes[4]* scale_linear_map[which_map].at("x")/2;
+  float vel_x = motionconverter(left_stick_value, right_stick_value)[0];
+  float angular_vel_z = motionconverter(left_stick_value, right_stick_value)[1];
 
   
   if 
@@ -412,8 +412,8 @@ else if (track_on == -1 && (scale_linear_map[which_map].find("x") != scale_linea
   }
   else
   {
-    cmd_vel_msg->linear.x = vel_x * scale_linear_map[which_map].at("x")*1/wheel_radius;
-    cmd_vel_msg->angular.z = angular_vel_z *scale_angular_map[which_map].at("yaw") *(base_width/(2*wheel_radius)); 
+    cmd_vel_msg->linear.x = vel_x;
+    cmd_vel_msg->angular.z = angular_vel_z;
     
   }
 }
@@ -490,3 +490,7 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
 }  // namespace teleop_twist_joy
 
 RCLCPP_COMPONENTS_REGISTER_NODE(teleop_twist_joy::TeleopTwistJoy)
+
+
+
+
