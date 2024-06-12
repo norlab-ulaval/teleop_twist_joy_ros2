@@ -3,9 +3,9 @@ teleop_twist_joy_node:
     axis_linear:
       x: 1
     scale_linear:
-      x: 0.3
+      x: 0.7
     scale_linear_turbo:
-      x: 0.6
+      x: 1.5
 
     axis_angular:
       yaw: 0
@@ -13,8 +13,6 @@ teleop_twist_joy_node:
       yaw: 0.4
 
     enable_button: 5  # L2 shoulder button
-    enable_turbo_button: 0  # L1 shoulder button
+    enable_turbo_button: 8 
     base_width: 0.52
     wheel_radius: 0.125
-    deadzone: 0.1
-    enable_track_control_button: 3

@@ -1,6 +1,0 @@
-<launch>
-    <include file="$(find-pkg-share marmotte_teleop)/launch/teleop.launch.xml"/>
-    <include file="$(find-pkg-share roboclaw_node_ros)/roboclaw_node_launch.py"/>
-    <include file="$(find-pkg-share marmotte_description)/launch/description_launch.py"/>
-    <include file="$(find-pkg-share marmotte_teleop)/launch/twist_mux_launch.py"/>
-</launch>
