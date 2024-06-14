@@ -75,7 +75,10 @@ The robot now has a special feature to control the tracks in an individual manne
 
 To use it, the operator must press the deadman switch (R1). Then press Y once to switch on/off the track_mode. The operator can now use the joysticks in a vertical way to make each track move individually in either direction. The turbo button (hold L1) is still available for this mode.
 
-  
+![ControllTracks](https://github.com/norlab-ulaval/teleop_twist_joy_ros2/assets/147538386/0a1348ea-2050-4c2d-846e-da575b5b806d)
+
+![normalmode](https://github.com/norlab-ulaval/teleop_twist_joy_ros2/assets/147538386/7c226520-c29f-4aa3-9168-4e225cf36c81)
+
 
 
 # Usage
