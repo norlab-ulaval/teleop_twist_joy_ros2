@@ -64,6 +64,16 @@ The package comes with the `teleop_node` that republishes `sensor_msgs/msg/Joy` 
   - `scale_angular_turbo.pitch (double, default: 0.0)`
   - `scale_angular_turbo.roll (double, default: 0.0)`
     
+- 'enable_track_control_button: 3'
+  - base_width: 0.52 
+  - wheel_radius: 0.125 
+  - deadzone: 0.1
+ 
+## Track_on mode:
+    
+The robot now has a special feature to control the tracks in an individual manner. Its max speed is scaled to as the max speed of the robot, and there is a safety against joystick drift.
+
+To use it, the operator must press the deadman switch (R1). Then press Y once to switch on/off the track_mode. The operator can now use the joysticks in a vertical way to make each track move individually in either direction. The turbo button (hold L1) is still available for this mode.
 
   
 
