@@ -68,8 +68,12 @@ struct TeleopTwistJoy::Impl
   bool require_enable_button;
   int64_t enable_button;
   int64_t enable_turbo_button;
-
+  float base_width;
+  float deadzone;
+  int enable_track_control_button;
+  int track_on = 1;
   bool inverted_reverse;
+  int timer = 0;
 
   std::map<std::string, int64_t> axis_linear_map;
   std::map<std::string, std::map<std::string, double>> scale_linear_map;
@@ -81,7 +85,7 @@ struct TeleopTwistJoy::Impl
 };
 
 /**
- * Constructs TeleopTwistJoy.
+ * Constructs TeleopTwistJoy. 
  */
 TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions & options)
 : rclcpp::Node("teleop_twist_joy_node", options)
@@ -92,6 +96,16 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions & options)
 
   pimpl_->publish_stamped_twist = this->declare_parameter("publish_stamped_twist", false);
   pimpl_->frame_id = this->declare_parameter("frame", "teleop_twist_joy");
+
+  this->declare_parameter<float>("base_width", 0.557);
+  this->get_parameter("base_width", pimpl_->base_width);
+
+  this->declare_parameter<float>("deadzone", 0);
+  this->get_parameter("deadzone", pimpl_->deadzone);
+
+  this->declare_parameter<int>("enable_track_control_button", 4);
+  this->get_parameter("enable_track_control_button", pimpl_->enable_track_control_button);
+
 
   if (pimpl_->publish_stamped_twist) {
     pimpl_->cmd_vel_stamped_pub = this->create_publisher<geometry_msgs::msg::TwistStamped>(
@@ -310,6 +324,8 @@ void TeleopTwistJoy::Impl::fillCmdVelMsg(
   const std::string & which_map,
   geometry_msgs::msg::Twist * cmd_vel_msg)
 {
+  if (track_on == 1)
+  {
   double lin_x = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "x");
   double ang_z = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "yaw");
 
@@ -319,6 +335,46 @@ void TeleopTwistJoy::Impl::fillCmdVelMsg(
   cmd_vel_msg->angular.z = (lin_x < 0.0 && inverted_reverse) ? -ang_z : ang_z;
   cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
   cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
+  }
+  else
+  {if (track_on == -1 && (scale_linear_map[which_map].find("x") != scale_linear_map[which_map].end() && scale_angular_map[which_map].find("yaw") != scale_angular_map[which_map].end()))
+{ 
+  float left_stick_value = joy_msg->axes[1] * scale_linear_map[which_map].at("x");
+  float right_stick_value = joy_msg->axes[4]* scale_linear_map[which_map].at("x");
+  float vel_x = left_stick_value/2+right_stick_value/2;
+  float angular_vel_z = 1/base_width*(right_stick_value-left_stick_value);
+
+  
+  if 
+  
+      ((left_stick_value < deadzone && left_stick_value > -deadzone) 
+      
+      && 
+      
+      (right_stick_value < deadzone && right_stick_value > -deadzone))
+      //if BOTH joy sticks are near default(0), send no message
+  {
+    cmd_vel_msg->linear.x = 0;
+    cmd_vel_msg->angular.z = 0;
+    
+  }
+  else
+  {
+    cmd_vel_msg->linear.x = vel_x;
+    cmd_vel_msg->angular.z = angular_vel_z;
+
+  }
+
+}
+
+}
+
+
+
+
+
+
+
 }
 
 void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr joy_msg)
@@ -332,6 +388,19 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
     (static_cast<int>(joy_msg->buttons.size()) > enable_button &&
     joy_msg->buttons[enable_button]))
   {
+    if (joy_msg->buttons[enable_track_control_button])
+    {
+      if (timer > 4)
+      {
+        
+
+        track_on = track_on*-1;
+        timer = 0;
+      }
+      
+
+    }
+  timer ++;
     sendCmdVelMsg(joy_msg, "normal");
   } else {
     // When enable button is released, immediately send a single no-motion command
