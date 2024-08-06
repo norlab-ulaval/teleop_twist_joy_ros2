@@ -77,6 +77,9 @@ struct TeleopTwistJoy::Impl
   float deadzone;
   int track_on = 1;
   int timer = 0;
+  int enable_dead_man_button; //ADDED DEAD_MAN_BUTTON
+  
+
 
   std::map<std::string, int64_t> axis_linear_map;
   std::map<std::string, std::map<std::string, double>> scale_linear_map;
@@ -116,6 +119,9 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions& options) : Node("teleo
 
   this->declare_parameter<int>("enable_track_control_button", 4);
   this->get_parameter("enable_track_control_button", pimpl_->enable_track_control_button);
+
+  this->declare_parameter<int>("enable_dead_man_button", 0); //dead_man
+  this->get_parameter("enable_dead_man_button", pimpl_->enable_dead_man_button);
 
 
   std::map<std::string, int64_t> default_linear_map{
@@ -463,16 +469,14 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
   }
 
   
-  else
+  else if (!joy_msg->buttons[enable_dead_man_button])
   {
-    // When enable button is released, immediately send a single no-motion command
-    // in order to stop the robot.
-    if (!sent_disable_msg)
+    
     {
-      // Initializes with zeros by default.
+      // zeros by default.
       auto cmd_vel_msg = std::make_unique<geometry_msgs::msg::Twist>();
       cmd_vel_pub->publish(std::move(cmd_vel_msg));
-      sent_disable_msg = true;
+
     }
   }
 
