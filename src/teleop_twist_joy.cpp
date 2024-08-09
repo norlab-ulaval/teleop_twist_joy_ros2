@@ -74,6 +74,7 @@ struct TeleopTwistJoy::Impl
   int track_on = 1;
   bool inverted_reverse;
   int timer = 0;
+  int dead_man_button = 0;
 
   std::map<std::string, int64_t> axis_linear_map;
   std::map<std::string, std::map<std::string, double>> scale_linear_map;
@@ -103,7 +104,7 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions & options)
   this->declare_parameter<float>("deadzone", 0);
   this->get_parameter("deadzone", pimpl_->deadzone);
 
-  this->declare_parameter<int>("enable_track_control_button", 4);
+  this->declare_parameter<int>("enable_track_control_button", 3);
   this->get_parameter("enable_track_control_button", pimpl_->enable_track_control_button);
 
 
@@ -121,12 +122,12 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions & options)
 
   pimpl_->enable_button = this->declare_parameter("enable_button", 5);
 
-  pimpl_->enable_turbo_button = this->declare_parameter("enable_turbo_button", -1);
+  pimpl_->enable_turbo_button = this->declare_parameter("enable_turbo_button", 4);
 
   pimpl_->inverted_reverse = this->declare_parameter("inverted_reverse", false);
 
   std::map<std::string, int64_t> default_linear_map{
-    {"x", 5L},
+    {"x", 4L},
     {"y", -1L},
     {"z", -1L},
   };
@@ -134,7 +135,7 @@ TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions & options)
   this->get_parameters("axis_linear", pimpl_->axis_linear_map);
 
   std::map<std::string, int64_t> default_angular_map{
-    {"yaw", 2L},
+    {"yaw", 3L},
     {"pitch", -1L},
     {"roll", -1L},
   };
@@ -332,7 +333,7 @@ void TeleopTwistJoy::Impl::fillCmdVelMsg(
   cmd_vel_msg->linear.x = lin_x;
   cmd_vel_msg->linear.y = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "y");
   cmd_vel_msg->linear.z = getVal(joy_msg, axis_linear_map, scale_linear_map[which_map], "z");
-  cmd_vel_msg->angular.z = (lin_x < 0.0 && inverted_reverse) ? -ang_z : ang_z;
+  cmd_vel_msg->angular.z = ang_z;
   cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch");
   cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll");
   }
@@ -402,11 +403,9 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
     }
   timer ++;
     sendCmdVelMsg(joy_msg, "normal");
-  } else {
-    // When enable button is released, immediately send a single no-motion command
-    // in order to stop the robot.
-    if (!sent_disable_msg) {
-      // Initializes with zeros by default.
+  } else if (!joy_msg->buttons[dead_man_button])
+
+  {//if dead_man_not_pressed, publish 0,0
       if (publish_stamped_twist) {
         auto cmd_vel_stamped_msg = std::make_unique<geometry_msgs::msg::TwistStamped>();
         cmd_vel_stamped_msg->header.stamp = clock->now();
@@ -416,8 +415,6 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
         auto cmd_vel_msg = std::make_unique<geometry_msgs::msg::Twist>();
         cmd_vel_pub->publish(std::move(cmd_vel_msg));
       }
-      sent_disable_msg = true;
-    }
   }
 }
 
