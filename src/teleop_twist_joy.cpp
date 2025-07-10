@@ -74,9 +74,12 @@ namespace teleop_twist_joy
     int64_t turbo_axis;
     int64_t track_control_button;
     int64_t autonomy_button;
+    float exponential_scale;
     float deadzone;
     bool track_mode = false;
     bool track_button_latch = false;
+    int64_t track_axis_left;
+    int64_t track_axis_right;
     float base_width;
 
     std::map<std::string, int64_t> axis_linear_map;
@@ -84,7 +87,6 @@ namespace teleop_twist_joy
 
     std::map<std::string, int64_t> axis_angular_map;
     std::map<std::string, std::map<std::string, double>> scale_angular_map;
-    array<float, 2> motionconverter(float gauche, float droit);
   };
 
   /**
@@ -103,11 +105,14 @@ namespace teleop_twist_joy
     pimpl_->require_autonomy_button = this->declare_parameter("require_autonomy_button", true);
     pimpl_->enable_axis = this->declare_parameter("enable_axis", 5);
     pimpl_->turbo_axis = this->declare_parameter("turbo_axis", -1);
+    pimpl_->track_axis_left = this->declare_parameter("track_axis_left", 1);
+    pimpl_->track_axis_right = this->declare_parameter("track_axis_right", 4);
     pimpl_->track_control_button = this->declare_parameter<int>("track_control_button", 4);
     pimpl_->autonomy_button = this->declare_parameter<int>("autonomy_button", 0);
 
     pimpl_->base_width = this->declare_parameter<float>("base_width", 0.5);
     pimpl_->deadzone = this->declare_parameter<float>("deadzone", 0.2);
+    pimpl_->exponential_scale = this->declare_parameter<float>("exponential_scale", 1.0);
 
     std::map<std::string, int64_t> default_linear_map{
       {"x", 4L},
@@ -165,6 +170,10 @@ namespace teleop_twist_joy
                         "Track control button %" PRId64 ".", pimpl_->track_control_button);
     ROS_INFO_COND_NAMED(pimpl_->require_autonomy_button, "TeleopTwistJoy",
                         "Autonomy enable button %" PRId64 ".", pimpl_->autonomy_button);
+    ROS_INFO_COND_NAMED(pimpl_->track_axis_left >= 0, "TeleopTwistJoy",
+                        "Track left axis %" PRId64 ".", pimpl_->track_axis_left);
+    ROS_INFO_COND_NAMED(pimpl_->track_axis_right >= 0, "TeleopTwistJoy",
+                        "Track right axis %" PRId64 ".", pimpl_->track_axis_right);
 
     for (std::map<std::string, int64_t>::iterator it = pimpl_->axis_linear_map.begin();
          it != pimpl_->axis_linear_map.end(); ++it)
@@ -188,12 +197,13 @@ namespace teleop_twist_joy
     {
       static std::set<std::string> intparams = {"axis_linear.x", "axis_linear.y", "axis_linear.z",
                                                 "axis_angular.yaw", "axis_angular.pitch", "axis_angular.roll",
-                                                "enable_axis", "turbo_axis", "track_control_button", "autonomy_button"};
+                                                "enable_axis", "turbo_axis", "track_control_button", "autonomy_button",
+                                                "track_axis_left", "track_axis_right"};
       static std::set<std::string> doubleparams = {"scale_linear.x", "scale_linear.y", "scale_linear.z",
                                                    "scale_linear_turbo.x", "scale_linear_turbo.y", "scale_linear_turbo.z",
                                                    "scale_angular.yaw", "scale_angular.pitch", "scale_angular.roll",
                                                    "scale_angular_turbo.yaw", "scale_angular_turbo.pitch", "scale_angular_turbo.roll",
-                                                   "base_width", "deadzone"};
+                                                   "base_width", "deadzone", "exponential_scale"};
       static std::set<std::string> boolparams = {"require_enable_button", "require_autonomy_button"};
       auto result = rcl_interfaces::msg::SetParametersResult();
       result.successful = true;
@@ -256,6 +266,14 @@ namespace teleop_twist_joy
         {
           this->pimpl_->track_control_button = parameter.get_value<rclcpp::PARAMETER_INTEGER>();
         }
+        else if (parameter.get_name() == "track_axis_left")
+        {
+          this->pimpl_->track_axis_left = parameter.get_value<rclcpp::PARAMETER_INTEGER>();
+        }
+        else if (parameter.get_name() == "track_axis_right")
+        {
+          this->pimpl_->track_axis_right = parameter.get_value<rclcpp::PARAMETER_INTEGER>();
+        }
         else if (parameter.get_name() == "autonomy_button")
         {
           this->pimpl_->autonomy_button = parameter.get_value<rclcpp::PARAMETER_INTEGER>();
@@ -267,6 +285,10 @@ namespace teleop_twist_joy
         else if (parameter.get_name() == "deadzone")
         {
           this->pimpl_->deadzone = parameter.get_value<rclcpp::PARAMETER_DOUBLE>();
+        }
+        else if (parameter.get_name() == "exponential_scale")
+        {
+          this->pimpl_->exponential_scale = parameter.get_value<rclcpp::PARAMETER_DOUBLE>();
         }
         else if (parameter.get_name() == "axis_linear.x")
         {
@@ -347,14 +369,6 @@ namespace teleop_twist_joy
     callback_handle = this->add_on_set_parameters_callback(param_callback);
   }
 
-  array<float, 2> TeleopTwistJoy::Impl::motionconverter(float gauche, float droit)
-  {
-    array<float, 2> X;                        // vecteur X
-    X[0] = (gauche + droit);                  // calcul matriciel, [U] = r*[J]*[y] , donne Ux
-    X[1] = 1 / base_width * (droit - gauche); // calcul matriciel, [U] = r*[J]*[y] , donne thetadot Z
-    return X;
-  }
-
   TeleopTwistJoy::~TeleopTwistJoy()
   {
     delete pimpl_;
@@ -372,12 +386,20 @@ namespace teleop_twist_joy
     {
       return 0.0;
     }
+    
+    double joystick_value = joy_msg->axes[axis_map.at(fieldname)];
+    if (std::fabs(joystick_value) < deadzone)
+    {
+      return 0.0;
+    } 
+
+    // Apply exponential scaling to joystick value
+    joystick_value = std::pow(std::fabs(joystick_value), exponential_scale) * (joystick_value >= 0 ? 1 : -1);
 
     // Turbo is applied as a ramp based on the axis value
     double turbo_ramp = turbo_scale_map.at(fieldname) - scale_map.at(fieldname);
     double turbo_gain = (joy_msg->axes[turbo_axis] - 1) * -0.5 * turbo_ramp;
-
-    return joy_msg->axes[axis_map.at(fieldname)] * (scale_map.at(fieldname) + turbo_gain);
+    return joystick_value * (scale_map.at(fieldname) + turbo_gain);
   }
 
   void TeleopTwistJoy::Impl::sendCmdVelMsg(const sensor_msgs::msg::Joy::SharedPtr joy_msg,
@@ -394,27 +416,24 @@ namespace teleop_twist_joy
       cmd_vel_msg->angular.y = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "pitch", scale_angular_map["turbo"]);
       cmd_vel_msg->angular.x = getVal(joy_msg, axis_angular_map, scale_angular_map[which_map], "roll", scale_angular_map["turbo"]);
     }
-
-    else if (scale_linear_map[which_map].find("x") != scale_linear_map[which_map].end() &&
-             scale_angular_map[which_map].find("yaw") != scale_angular_map[which_map].end())
+    else 
     {
-      float left_stick_value = joy_msg->axes[1] * scale_linear_map[which_map].at("x") / 2;
-      float right_stick_value = joy_msg->axes[4] * scale_linear_map[which_map].at("x") / 2;
-      float vel_x = motionconverter(left_stick_value, right_stick_value)[0];
-      float angular_vel_z = motionconverter(left_stick_value, right_stick_value)[1];
+      float left_value = std::fabs(joy_msg->axes[track_axis_left]) > deadzone ? joy_msg->axes[track_axis_left] : 0.0;
+      float right_value = std::fabs(joy_msg->axes[track_axis_right]) > deadzone ? joy_msg->axes[track_axis_right] : 0.0;
 
-      // if BOTH joy sticks are near default(0), send no message
-      if ((left_stick_value < deadzone && left_stick_value > -deadzone) &&
-          (right_stick_value < deadzone && right_stick_value > -deadzone))
-      {
-        cmd_vel_msg->linear.x = 0;
-        cmd_vel_msg->angular.z = 0;
-      }
-      else
-      {
-        cmd_vel_msg->linear.x = vel_x;
-        cmd_vel_msg->angular.z = angular_vel_z;
-      }
+      // Apply exponential scaling to joystick values
+      left_value = std::pow(std::fabs(left_value), exponential_scale) * (left_value >= 0 ? 1 : -1);
+      right_value = std::pow(std::fabs(right_value), exponential_scale) * (right_value >= 0 ? 1 : -1);
+
+      // Apply scaling based on the amount of turbo applied
+      double turbo_ramp = scale_linear_map["turbo"].at("x") - scale_linear_map["normal"].at("x");
+      double turbo_gain = (joy_msg->axes[turbo_axis] - 1) * -0.5 * turbo_ramp;
+      left_value = left_value * (scale_linear_map["normal"].at("x") + turbo_gain);
+      right_value = right_value * (scale_linear_map["normal"].at("x") + turbo_gain);
+
+      // Convert to cmd_vel message
+      cmd_vel_msg->linear.x = (right_value + left_value) / 2;
+      cmd_vel_msg->angular.z = (right_value - left_value) / base_width;
     }
 
     cmd_vel_pub->publish(std::move(cmd_vel_msg));
