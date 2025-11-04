@@ -29,6 +29,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 #include <set>
 #include <string>
 
+#include <geometry_msgs/msg/twist_stamped.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
@@ -66,8 +67,13 @@ namespace teleop_twist_joy
 
     rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr lock_autonomy_pub;
+    rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr cmd_vel_pub_twist_stamped;
 
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr lock_autonomy_pub;
+    rclcpp::Clock::SharedPtr clock;
+
+
+    bool use_twist_stamped = false;
     bool require_enable_button;
     bool require_autonomy_button;
     int64_t enable_axis;
@@ -95,8 +101,20 @@ namespace teleop_twist_joy
   TeleopTwistJoy::TeleopTwistJoy(const rclcpp::NodeOptions &options) : Node("teleop_twist_joy_node", options)
   {
     pimpl_ = new Impl;
+    pimpl_->clock = this->get_clock();
+    pimpl_ ->use_twist_stamped = this->declare_parameter("use_twist_stamped", false);
 
-    pimpl_->cmd_vel_pub = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+    if (pimpl_->use_twist_stamped)
+    {
+      RCLCPP_INFO(this->get_logger(), "Publishing geometry_msgs/TwistStamped on cmd_vel topic.");
+      pimpl_->cmd_vel_pub_twist_stamped = this->create_publisher<geometry_msgs::msg::TwistStamped>("cmd_vel", 10);
+    }
+    else
+    {
+      RCLCPP_INFO(this->get_logger(), "Publishing geometry_msgs/Twist on cmd_vel topic.");
+      pimpl_->cmd_vel_pub = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+    }
+    
     pimpl_->lock_autonomy_pub = this->create_publisher<std_msgs::msg::Bool>("lock_autonomy", 10);
     pimpl_->joy_sub = this->create_subscription<sensor_msgs::msg::Joy>("joy", rclcpp::QoS(10),
                                                                        std::bind(&TeleopTwistJoy::Impl::joyCallback, this->pimpl_, std::placeholders::_1));
@@ -405,6 +423,7 @@ namespace teleop_twist_joy
   void TeleopTwistJoy::Impl::sendCmdVelMsg(const sensor_msgs::msg::Joy::SharedPtr joy_msg,
                                            const std::string &which_map)  
   {
+    
     // Initializes with zeros by default.
     auto cmd_vel_msg = std::make_unique<geometry_msgs::msg::Twist>();
     if (!track_mode)
@@ -434,9 +453,25 @@ namespace teleop_twist_joy
       // Convert to cmd_vel message
       cmd_vel_msg->linear.x = (right_value + left_value) / 2;
       cmd_vel_msg->angular.z = (right_value - left_value) / base_width;
+
+
     }
 
-    cmd_vel_pub->publish(std::move(cmd_vel_msg));
+    if (use_twist_stamped)
+    {
+      auto cmd_vel_stamped_msg = std::make_unique<geometry_msgs::msg::TwistStamped>();
+      cmd_vel_stamped_msg->header.stamp =  clock->now();
+      cmd_vel_stamped_msg->header.frame_id = "base_link";
+      cmd_vel_stamped_msg->twist = *cmd_vel_msg;
+      cmd_vel_pub_twist_stamped->publish(std::move(cmd_vel_stamped_msg));
+      return;
+    }
+    else 
+    {
+      // Publish regular Twist message
+      cmd_vel_pub->publish(std::move(cmd_vel_msg));
+    }
+
   }
 
   void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr joy_msg)
